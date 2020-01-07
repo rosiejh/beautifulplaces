@@ -1,0 +1,32 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <header class="jumbotron">
+        <!-- container를 추가해서 창 크기를 줄여도 heading 왼쪽에 여백이 있도록 -->
+        <div class="container"> 
+            <h1 style="text-align: center;">Beautiful Places 🏝</h1>
+            <p style="text-align: center;">Share awesome places from all over the world!</p>
+            <p style="text-align: center;">
+                <a class="btn btn-primary btn-lg" href="/place/new">Add New Place</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% place.forEach(function (place) { %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= place.image %>">
+                    <div class="caption">
+                        <h4><%= place.name %></h4>
+                    </div>
+                    <p>
+                        <a href="/place/<%= place._id %>" class="btn btn-primary">More Info</a>
+                    </p>
+                </div>
+            </div>
+        <% }); %>
+    </div> 
+</div>
+
+<%- include("partials/footer") %>
