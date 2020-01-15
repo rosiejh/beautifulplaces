@@ -1,20 +1,14 @@
 var express     = require('express'),
     app         = express(),
     bodyParser  = require('body-parser'),
-    mongoose    = require('mongoose');
+    mongoose    = require('mongoose'),
+    Place       = require('./models/place'),
+    seedDB      = require('./seeds');
 
 mongoose.connect('mongodb://localhost/bepl', {useNewUrlParser: true, useUnifiedTopology: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-
-// Schema setup
-var placeSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-var place = mongoose.model('place', placeSchema);
+seedDB();
 
 app.get('/', function (req, res) {
     res.render('landing');
@@ -22,7 +16,7 @@ app.get('/', function (req, res) {
 
 // INDEX - show all places
 app.get('/place', function (req, res) {
-    place.find({}, function (err, allPlaces) {
+    Place.find({}, function (err, allPlaces) {
         if (err) {
             console.log(err);
         } else {
@@ -40,7 +34,7 @@ app.post('/place', function (req, res) {
     var newPlace = {name: name, image: image, description: desc};
     
     // create a new place and save to DB
-    place.create(newPlace, function (err, newlyCreated) {
+    Place.create(newPlace, function (err, newlyCreated) {
         if (err) {
             console.log(err);
         } else {
@@ -58,7 +52,7 @@ app.get('/place/new', function (req, res) {
 // SHOW - show more info about one place
 app.get('/place/:id', function (req, res) {
     // find the place with provided ID
-    place.findById(req.params.id, function (err, foundplace) {
+    Place.findById(req.params.id).populate("comments").exec(function (err, foundplace) {
         if (err) {
             console.log(err);
         } else {
