@@ -77,6 +77,17 @@ router.put('/:id', function (req, res) {
     });
 });
 
+// DELETE place route
+router.delete('/:id', function (req, res) {
+    Place.findByIdAndRemove(req.params.id, function (err) {
+        if (err) {
+            res.redirect('/place');
+        } else {
+            res.redirect('/place');
+        }
+    });
+});
+
 // middleware
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
