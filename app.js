@@ -1,13 +1,14 @@
-var express       = require('express'),
-    app           = express(),
-    bodyParser    = require('body-parser'),
-    mongoose      = require('mongoose'),
-    passport      = require('passport'),
-    LocalStrategy = require('passport-local'),
-    Place         = require('./models/place'),
-    Comment       = require('./models/comment'),
-    User          = require('./models/user'),  
-    seedDB        = require('./seeds');
+var express        = require('express'),
+    app            = express(),
+    bodyParser     = require('body-parser'),
+    mongoose       = require('mongoose'),
+    passport       = require('passport'),
+    LocalStrategy  = require('passport-local'),
+    methodOverride = require('method-override'),
+    Place          = require('./models/place'),
+    Comment        = require('./models/comment'),
+    User           = require('./models/user'),  
+    seedDB         = require('./seeds');
 
 // Requiring routes
 var commentRoutes = require('./routes/comments'),
@@ -18,7 +19,8 @@ mongoose.connect('mongodb://localhost/bepl', {useNewUrlParser: true, useUnifiedT
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
-seedDB();
+app.use(methodOverride("_method"))
+// seedDB();
 
 // PASSPORT Configuration
 app.use(require('express-session')({
