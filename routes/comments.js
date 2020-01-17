@@ -1,10 +1,11 @@
-var express = require('express');
-var router  = express.Router({mergeParams: true});
-var Place = require('../models/place');
-var Comment = require('../models/comment');
+var express      = require('express'),
+    router       = express.Router({mergeParams: true}),
+    Place        = require('../models/place'),
+    Comment      = require('../models/comment'),
+    middleware   = require('../middleware');
 
 // Comments New
-router.get('/new', isLoggedIn, function (req, res){
+router.get('/new', middleware.isLoggedIn, function (req, res){
     // find place by id
     Place.findById(req.params.id, function (err, place) {
         if (err) {
@@ -17,7 +18,7 @@ router.get('/new', isLoggedIn, function (req, res){
 });
 
 // Comments Create
-router.post('/', isLoggedIn, function (req, res) {
+router.post('/', middleware.isLoggedIn, function (req, res) {
     Place.findById(req.params.id, function (err, place) {
         if (err) {
             console.log(err);
@@ -43,7 +44,7 @@ router.post('/', isLoggedIn, function (req, res) {
 });
 
 // Comment EDIT route
-router.get('/:comment_id/edit', function (req, res) {
+router.get('/:comment_id/edit', middleware.checkCommentOwnership, function (req, res) {
     Comment.findById(req.params.comment_id, function (err, foundComment) {
         if (err) {
             res.redirect("back");
@@ -54,7 +55,7 @@ router.get('/:comment_id/edit', function (req, res) {
 });
 
 // Comment UPDATE route
-router.put('/:comment_id', function (req, res) {
+router.put('/:comment_id', middleware.checkCommentOwnership, function (req, res) {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function (err, updatedComment) {
         if (err) {
             res.redirect("back");
@@ -65,7 +66,7 @@ router.put('/:comment_id', function (req, res) {
 });
 
 // Comment DELETE route
-router.delete('/:comment_id', function (req, res) {
+router.delete('/:comment_id', middleware.checkCommentOwnership, function (req, res) {
     Comment.findByIdAndRemove(req.params.comment_id, function (err) {
         if (err) {
             res.redirect("back");
@@ -74,13 +75,5 @@ router.delete('/:comment_id', function (req, res) {
         }
     });
 });
-
-// middleware
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-};
 
 module.exports = router;

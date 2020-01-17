@@ -1,6 +1,7 @@
-var express = require('express');
-var router  = express.Router();
-var Place = require('../models/place');
+var express     = require('express'),
+    router      = express.Router(),
+    Place       = require('../models/place'),
+    middleware  = require('../middleware');
 
 // INDEX - show all places
 router.get('/', function (req, res) {
@@ -14,7 +15,7 @@ router.get('/', function (req, res) {
 });
 
 // CREATE - add new place to DB
-router.post('/', isLoggedIn, function (req, res) {
+router.post('/', middleware.isLoggedIn, function (req, res) {
     // get data from form
     var name = req.body.name;
     var image = req.body.image;
@@ -37,7 +38,7 @@ router.post('/', isLoggedIn, function (req, res) {
 });
 
 // NEW - show form to create new place
-router.get('/new', isLoggedIn, function (req, res) {
+router.get('/new', middleware.isLoggedIn, function (req, res) {
     res.render("places/new");
 });
 
@@ -55,14 +56,14 @@ router.get('/:id', function (req, res) {
 });
 
 // EDIT place route
-router.get('/:id/edit', checkPlaceOwnership, function (req, res) {
+router.get('/:id/edit', middleware.checkPlaceOwnership, function (req, res) {
     Place.findById(req.params.id, function (err, foundPlace) {
         res.render("places/edit", {place: foundPlace});
     });
 });
 
 // UPDATE place route
-router.put('/:id', checkPlaceOwnership, function (req, res) {
+router.put('/:id', middleware.checkPlaceOwnership, function (req, res) {
     // find & update the correct place
     Place.findByIdAndUpdate(req.params.id, req.body.place, function (err, updatedPlace) {
         if (err) {
@@ -74,7 +75,7 @@ router.put('/:id', checkPlaceOwnership, function (req, res) {
 });
 
 // DELETE place route
-router.delete('/:id', checkPlaceOwnership, function (req, res) {
+router.delete('/:id', middleware.checkPlaceOwnership, function (req, res) {
     Place.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
             res.redirect('/place');
@@ -83,32 +84,5 @@ router.delete('/:id', checkPlaceOwnership, function (req, res) {
         }
     });
 });
-
-// middleware
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-};
-
-function checkPlaceOwnership (req, res, next) {
-    if (req.isAuthenticated()) {
-        Place.findById(req.params.id, function (err, foundPlace) {
-            if (err) {
-                res.redirect("back");
-            } else {
-                // Does user own the place?
-                if (foundPlace.author.id.equals(req.user._id)) {
-                    next();
-                } else {
-                    res.redirect("back");
-                }
-            }
-        });
-    } else {
-        res.redirect("back");
-    }
-};
 
 module.exports = router;
