@@ -13,7 +13,7 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= place.image %>">
                 <div class="caption-full">
-                    <h4 class="pull-right">$9.00/night</h4>
+                    <h4 class="pull-right">Sydney, Australia</h4>
                     <h4><a><%= place.name %></a></h4>
                     <p><%= place.description %></p>
                     <p>
@@ -40,6 +40,7 @@
                             <p>
                                 <%= comment.text %>
                             </p>
+                            <a class="btn btn-xs btn-warning" href="/place/<%= place._id %>/comments/<%= comment._id %>/edit">Edit</a>
                         </div>
                     </div>
                 <% }) %>
