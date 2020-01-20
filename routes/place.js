@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.render("places/index", {place:allPlaces, currentUser: req.user});
+            res.render("places/index", {place:allPlaces, page: 'place', currentUser: req.user});
         }
     });
 });
