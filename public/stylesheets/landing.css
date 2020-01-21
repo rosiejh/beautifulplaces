@@ -47,27 +47,27 @@ body {
 }
 
 .slideshow li:nth-child(1) { 
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Sydney_Opera_House_Sails.jpg/1600px-Sydney_Opera_House_Sails.jpg) 
+    background-image: url(https://images.unsplash.com/photo-1543349689-9a4d426bee8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2791&q=80) 
 }
 
 .slideshow li:nth-child(2) { 
-    background-image: url(http://i.imgur.com/SBEmFpv.jpg);
-    animation-delay: 10s; 
+    background-image: url(https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2978&q=80);
+    animation-delay: 3s; 
 }
 
 .slideshow li:nth-child(3) { 
-    background-image: url(http://i.imgur.com/emvhOnb.jpg);
-    animation-delay: 20s; 
+    background-image: url(https://images.unsplash.com/photo-1556687395-3c156c7aa8aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80);
+    animation-delay: 6s; 
 }
 
 .slideshow li:nth-child(4) { 
-    background-image: url(http://i.imgur.com/2LSMCmJ.jpg);
-    animation-delay: 30s; 
+    background-image: url(https://images.unsplash.com/photo-1476362174823-3a23f4aa6d76?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80);
+    animation-delay: 9s; 
 }
 
 .slideshow li:nth-child(5) { 
-    background-image: url(http://i.imgur.com/TVGe0Ef.jpg);
-    animation-delay: 40s; 
+    background-image: url(https://images.unsplash.com/photo-1449034446853-66c86144b0ad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80);
+    animation-delay: 12s; 
 }
 
 @keyframes imageAnimation { 
