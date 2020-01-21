@@ -20,12 +20,14 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
+    var location = req.body.location;
     var author = {
         id: req.user._id,
         username: req.user.username
-    }
-    var newPlace = {name: name, image: image, description: desc, author: author};
-    
+    };
+
+    var newPlace = {name: name, image: image, description: desc, author: author, location: location};
+        
     // create a new place and save to DB
     Place.create(newPlace, function (err, newlyCreated) {
         if (err) {
@@ -34,7 +36,7 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
             // redirect back to place page
             res.redirect('/place');
         }
-    });
+    }); 
 });
 
 // NEW - show form to create new place
@@ -67,8 +69,10 @@ router.put('/:id', middleware.checkPlaceOwnership, function (req, res) {
     // find & update the correct place
     Place.findByIdAndUpdate(req.params.id, req.body.place, function (err, updatedPlace) {
         if (err) {
+            req.flash("error", err.message);
             res.redirect('/place');
         } else {
+            req.flash("success", "Successfully Updated!");
             res.redirect('/place/' + req.params.id);
         }
     });
