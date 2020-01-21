@@ -6,19 +6,19 @@
             <form action="/place" method="POST">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input class="form-control" type="text" name="name" placeholder="Opera House">
+                    <input class="form-control" type="text" name="name" placeholder="Opera House" required>
                 </div>
                 <div class="form-group">
                     <label for="image">Image URL</label>
-                    <input class="form-control" type="text" name="image" placeholder="Image URL">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input class="form-control" type="text" name="description" placeholder="A multi-venue performing arts centre at Sydney Harbour.">
+                    <input class="form-control" type="text" name="image" placeholder="Image URL" required>
                 </div>
                 <div class="form-group">
                     <label for="location">Location</label>
                     <input class="form-control" type="text" name="location" placeholder="Sydney, Australia">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" type="text" name="description" placeholder="A multi-venue performing arts centre at Sydney Harbour."></textarea>
                 </div>
                 <div class="form-group">    
                     <button class="btn btn-lg btn-primary btn-block">Submit</button>

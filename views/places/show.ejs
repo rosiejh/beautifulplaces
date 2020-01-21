@@ -1,23 +1,16 @@
 <%- include("../partials/header") %>
 
-    <div class="row>
-        <div class="col-md-3">
-            <p class="lead">BEPL</p>
-            <div class="list-group">
-                <li class="list-group-item active">Info 1</li>
-                <li class="list-group-item">Info 2</li>
-                <li class="list-group-item">Info 3</li>
-            </div>
-        </div>
+    <div class="row">
         <div class="col-md-9">
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= place.image %>">
                 <div class="caption-full">
                     <h4 class="pull-right"><%= place.location %></h4>
-                    <h4><a><%= place.name %></a></h4>
+                    <h2><a><%= place.name %></a></h2>
                     <p><%= place.description %></p>
+                    <br>
                     <p>
-                        <em>Created By: <%= place.author.username %>, <%= moment(place.createdAt).fromNow() %></em>
+                        <em>Created By : <b><%= place.author.username %></b>, <%= moment(place.createdAt).fromNow() %></em>
                     </p>
                     <% if (currentUser && place.author.id.equals(currentUser._id)) { %>
                         <a class="btn btn-xs btn-warning" href="/place/<%= place._id %>/edit">Edit</a>
