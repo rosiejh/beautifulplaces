@@ -49,6 +49,7 @@ app.use("/", indexRoutes);
 app.use("/place", placeRoutes);
 app.use("/place/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT || 3000, function() {
+//process.env.PORT || 
+app.listen(3000, function() {
     console.log("The server has started!");
 });

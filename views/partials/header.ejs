@@ -17,11 +17,12 @@
                     <span class="icon-bar"></span>
                 </button>
     
-                <a class="navbar-brand" href="/">BEPL</a>
+                <a class="navbar-brand" href="/"><b>❪ BEPL ❫</b></a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="<%= typeof page !== 'undefined' && page === 'place' ? 'active' : '' %>"><a href="/place">Home</a></li>
+                    <li><a href="/place/new">Create</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <% if(!currentUser){ %>
