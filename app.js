@@ -16,7 +16,7 @@ var commentRoutes = require('./routes/comments'),
     placeRoutes   = require('./routes/place'),
     indexRoutes   = require('./routes/index');
 
-mongoose.connect('mongodb+srv://rosie:rosiebepl@rosie-kkjzg.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://guest:abcd@rosie-kkjzg.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -49,7 +49,6 @@ app.use("/", indexRoutes);
 app.use("/place", placeRoutes);
 app.use("/place/:id/comments", commentRoutes);
 
-//process.env.PORT || 
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
     console.log("The server has started!");
 });
