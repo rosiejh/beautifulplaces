@@ -10,14 +10,16 @@ body {
 }
 
 #landing-header h1 {
+    font-family: 'Lobster', cursive;
     color: #fff;
-    text-shadow: 2px 2px #595959;
-    font-size: 50pt;
+    text-shadow: 3px 5px #595959;
+    font-size: 70pt;
 }
 
 #landing-header p {
+    font-family: 'Raleway', sans-serif;
     color: #fff;
-    font-size: 20pt;
+    font-size: 25pt;
 }
 
 .slideshow { 

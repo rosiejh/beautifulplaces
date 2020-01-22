@@ -47,13 +47,44 @@ router.get('/new', middleware.isLoggedIn, function (req, res) {
 // SHOW - show more info about one place
 router.get('/:id', function (req, res) {
     // find the place with provided ID
-    Place.findById(req.params.id).populate("comments").exec(function (err, foundplace) {
+    Place.findById(req.params.id).populate("comments").exec(function (err, foundPlace) {
         if (err) {
             console.log(err);
         } else {
             // render show template with that place
-            res.render("places/show", {place: foundplace});
+            res.render("places/show", {place: foundPlace});
         }
+    });
+});
+
+// LIKE Route
+router.post('/:id/like', middleware.isLoggedIn, function (req, res) {
+    Place.findById(req.params.id, function (err, foundPlace) {
+        if (err) {
+            console.log(err);
+            return res.redirect("/place");
+        }
+
+        // check if req.user._id exists in foundPlace.likes
+        var foundUserLike = foundPlace.likes.some(function (like) {
+            return like.equals(req.user._id);
+        });
+
+        if (foundUserLike) {
+            // user already liked, removing like
+            foundPlace.likes.pull(req.user._id);
+        } else {
+            // adding the new user like
+            foundPlace.likes.push(req.user);
+        }
+
+        foundPlace.save(function (err) {
+            if (err) {
+                console.log(err);
+                return res.redirect("/place");
+            }
+            return res.redirect("/place/" + foundPlace._id);
+        });
     });
 });
 
