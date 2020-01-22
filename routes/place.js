@@ -5,12 +5,23 @@ var express     = require('express'),
 
 // INDEX - show all places
 router.get('/', function (req, res) {
-    Place.find({}, function (err, allPlaces) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("places/index", {place:allPlaces, page: 'place', currentUser: req.user});
-        }
+    var perPage = 16;
+    var pageQuery = parseInt(req.query.page);
+    var pageNumber = pageQuery ? pageQuery : 1;
+    Place.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allPlaces) {
+        Place.count().exec(function (err, count) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("places/index", {
+                    place: allPlaces,
+                    page: 'place',
+                    currentUser: req.user,
+                    current: pageNumber,
+                    pages: Math.ceil(count / perPage)
+                });
+            }
+        });
     });
 });
 
