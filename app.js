@@ -2,7 +2,7 @@ const express        = require('express'),
       app            = express(),
       bodyParser     = require('body-parser'),
       mongoose       = require('mongoose'),
-      dotenv         = require('dotenv').config(),
+      dotenv         = require('dotenv'),
       flash          = require('connect-flash'),
       passport       = require('passport'),
       LocalStrategy  = require('passport-local'),
@@ -23,6 +23,7 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 app.use(methodOverride("_method"))
 app.use(flash())
+dotenv.config({ path: './config.env' })
 
 app.locals.moment = require('moment')
 
