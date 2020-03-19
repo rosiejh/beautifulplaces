@@ -1,56 +1,56 @@
-var Place   = require('../models/place'),
-    Comment = require('../models/comment');
+const Place   = require('../models/place'),
+      Comment = require('../models/comment')
 
-var middlewareObj = {};
+const middlewareObj = {}
 
-middlewareObj.checkPlaceOwnership = function (req, res, next) {
+middlewareObj.checkPlaceOwnership = (req, res, next) => {
     if (req.isAuthenticated()) {
-        Place.findById(req.params.id, function (err, foundPlace) {
+        Place.findById(req.params.id, (err, foundPlace) => {
             if (err) {
-                req.flash("error", "Place not found.");
-                res.redirect("back");
+                req.flash("error", "Place not found.")
+                res.redirect("back")
             } else {
                 // Does user own the place?
                 if (foundPlace.author.id.equals(req.user._id)) {
-                    next();
+                    next()
                 } else {
-                    req.flash("error", "You don't have permission to do that.");
-                    res.redirect("back");
+                    req.flash("error", "You don't have permission to do that.")
+                    res.redirect("back")
                 }
             }
-        });
+        })
     } else {
-        req.flash("error", "You need to login to do that.");
-        res.redirect("back");
+        req.flash("error", "You need to login to do that.")
+        res.redirect("back")
     }
-};
+}
 
-middlewareObj.checkCommentOwnership = function (req, res, next) {
+middlewareObj.checkCommentOwnership = (req, res, next) => {
     if (req.isAuthenticated()) {
-        Comment.findById(req.params.comment_id, function (err, foundComment) {
+        Comment.findById(req.params.comment_id, (err, foundComment) => {
             if (err) {
-                res.redirect("back");
+                res.redirect("back")
             } else {
                 if (foundComment.author.id.equals(req.user._id)) {
-                    next();
+                    next()
                 } else {
-                    req.flash("error", "You don't have permission to do that.");
-                    res.redirect("back");
+                    req.flash("error", "You don't have permission to do that.")
+                    res.redirect("back")
                 }
             }
-        });
+        })
     } else {
-        req.flash("error", "You need to login to do that.");
-        res.redirect("back");
+        req.flash("error", "You need to login to do that.")
+        res.redirect("back")
     }
-};
+}
 
-middlewareObj.isLoggedIn = function (req, res, next) {
+middlewareObj.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
-        return next();
+        return next()
     }
-    req.flash("error", "Please login first.");
-    res.redirect("/login");
-};
+    req.flash("error", "Please login first.")
+    res.redirect("/login")
+}
 
-module.exports = middlewareObj;
+module.exports = middlewareObj

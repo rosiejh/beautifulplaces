@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-var placeSchema = new mongoose.Schema({
+const placeSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
@@ -25,6 +25,6 @@ var placeSchema = new mongoose.Schema({
             ref: "User"
         }
     ]
-});
+})
 
-module.exports = mongoose.model("Place", placeSchema);
+module.exports = mongoose.model("Place", placeSchema)
