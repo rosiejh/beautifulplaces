@@ -2,7 +2,7 @@ const express        = require('express'),
       app            = express(),
       bodyParser     = require('body-parser'),
       mongoose       = require('mongoose'),
-      dotenv         = require('dotenv'),
+      dotenv         = require('dotenv').config(),
       flash          = require('connect-flash'),
       passport       = require('passport'),
       LocalStrategy  = require('passport-local'),
@@ -16,14 +16,12 @@ const commentRoutes = require('./routes/comment'),
       placeRoutes   = require('./routes/place'),
       indexRoutes   = require('./routes/index')
 
-mongoose.connect(process.env.MONGODB_URL,
-    {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(bodyParser.urlencoded({extended: true}))
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 app.use(methodOverride("_method"))
 app.use(flash())
-dotenv.config({ path: './config.env' })
 
 app.locals.moment = require('moment')
 
